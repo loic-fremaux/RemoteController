@@ -2,5 +2,4 @@
     <string name="app_name">Remote Controller</string>
     <string name="add_button_button">Ajouter un bouton</string>
     <string name="add_button_title">Ajouter un bouton</string>
-    <string name="title_activity_remote_controller">RemoteControllerActivity</string>
 </resources>
