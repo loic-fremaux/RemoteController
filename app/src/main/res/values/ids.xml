@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="url_input"/>
+    <item type="id" name="api_request_type_spinner"/>
+</resources>

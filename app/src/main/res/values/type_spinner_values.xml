@@ -5,4 +5,10 @@
         <item>Bluetooth request</item>
         <item>NFC tag</item>
     </string-array>
+    <string-array name="request_type_spinner_values">
+        <item>POST</item>
+        <item>PUT</item>
+        <item>GET</item>
+        <item>DELETE</item>
+    </string-array>
 </resources>

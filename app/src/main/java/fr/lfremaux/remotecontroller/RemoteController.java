@@ -8,19 +8,18 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import fr.lfremaux.remotecontroller.buttons.AbstractButton;
 import fr.lfremaux.remotecontroller.helpers.Buttons;
-import fr.lfremaux.remotecontroller.helpers.Files;
 
 public class RemoteController extends AppCompatActivity {
 
     private List<AbstractButton<?>> buttons;
+    private RequestQueue requestQueue;
 
     private static RemoteController instance;
 
@@ -28,11 +27,13 @@ public class RemoteController extends AppCompatActivity {
     public void onCreate(Bundle bundle) {
         instance = this;
         super.onCreate(bundle);
+        this.requestQueue = Volley.newRequestQueue(this);
         try {
             this.buttons = Buttons.getAllButtons(this.getApplicationContext());
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         setContentView(R.layout.activity_main);
         addInitialButtons();
     }
@@ -43,13 +44,27 @@ public class RemoteController extends AppCompatActivity {
     }
 
     public void addInitialButtons() {
-        final LinearLayout vg = findViewById(R.id.background);
+        final LinearLayout vg = findViewById(R.id.buttons_container);
         buttons.forEach(button -> {
             final Button b = new Button(this);
             b.setText(button.getName());
             button.bindAction(b);
             vg.addView(b);
         });
+    }
+
+    public void refreshButtons() {
+        final LinearLayout vg = findViewById(R.id.buttons_container);
+        vg.removeAllViews();
+        addInitialButtons();
+    }
+
+    public void saveButtons() {
+        Buttons.saveButtons(getApplicationContext(), getButtons());
+    }
+
+    public RequestQueue getRequestQueue() {
+        return requestQueue;
     }
 
     public List<AbstractButton<?>> getButtons() {

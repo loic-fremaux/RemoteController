@@ -35,6 +35,6 @@ public class Files {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "{}";
+        return "[]";
     }
 }

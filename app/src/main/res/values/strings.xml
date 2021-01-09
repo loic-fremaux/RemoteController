@@ -2,4 +2,8 @@
     <string name="app_name">Remote Controller</string>
     <string name="add_button_button">Ajouter un bouton</string>
     <string name="add_button_title">Ajouter un bouton</string>
+    <string name="create_button_submit">Créer</string>
+
+    <string name="button_name_hint">Nom du bouton</string>
+    <string name="url_hint">URL</string>
 </resources>

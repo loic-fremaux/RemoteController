@@ -1,11 +1,14 @@
 package fr.lfremaux.remotecontroller.buttons.impl;
 
-import android.view.View;
 import android.widget.Button;
+
+import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import fr.lfremaux.remotecontroller.RemoteController;
 import fr.lfremaux.remotecontroller.buttons.AbstractButton;
 import fr.lfremaux.remotecontroller.buttons.ButtonType;
 import fr.lfremaux.remotecontroller.buttons.RequestType;
@@ -63,6 +66,26 @@ public class ApiButton extends AbstractButton<ApiButton> {
     @Override
     public void bindAction(Button button) {
         button.setOnClickListener(v -> {
+            final StringRequest stringRequest = new StringRequest(getRequestType().getMethod(), url,
+                    response -> {
+                        System.out.println("resp: " + response);
+                        Snackbar.make(
+                                button,
+                                response,
+                                Snackbar.LENGTH_SHORT
+                        ).show();
+                    },
+                    error -> {
+                        System.out.println("request failed " + error.getMessage());
+                        Snackbar.make(
+                                button,
+                                "Une erreur est survenue...\n" + error.getMessage(),
+                                Snackbar.LENGTH_SHORT
+                        ).show();
+                    });
+
+            RemoteController.getInstance().getRequestQueue().add(stringRequest);
+
             System.out.println("button clicked: " + url);
         });
     }
