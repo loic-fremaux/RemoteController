@@ -13,6 +13,10 @@ import android.widget.Spinner;
 
 import java.util.stream.IntStream;
 
+import fr.lfremaux.remotecontroller.buttons.ButtonType;
+import fr.lfremaux.remotecontroller.buttons.RequestType;
+import fr.lfremaux.remotecontroller.buttons.impl.ApiButton;
+
 public class AddControllerActivity extends AppCompatActivity {
 
     @Override
@@ -23,7 +27,6 @@ public class AddControllerActivity extends AppCompatActivity {
         vg.removeViewAt(0);
 
         createTypeSelector();
-
     }
 
     private void createTypeSelector() {
@@ -65,6 +68,19 @@ public class AddControllerActivity extends AppCompatActivity {
     }
 
     public void submit(View view) {
+        final Spinner typeSpinner = findViewById(R.id.request_type_spinner);
+        System.out.println("selected str " + typeSpinner.getSelectedItem().toString());
+
+        RemoteController.getInstance().getButtons().add(
+                new ApiButton(
+                        "testButton",
+                        ButtonType.API_CALL,
+                        "test.com",
+                        RequestType.PUT,
+                        "noargs"
+                )
+        );
+
         finish();
     }
 }
