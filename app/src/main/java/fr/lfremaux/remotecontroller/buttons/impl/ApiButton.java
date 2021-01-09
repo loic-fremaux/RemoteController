@@ -8,6 +8,8 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.UUID;
+
 import fr.lfremaux.remotecontroller.RemoteController;
 import fr.lfremaux.remotecontroller.buttons.AbstractButton;
 import fr.lfremaux.remotecontroller.buttons.ButtonType;
@@ -22,8 +24,8 @@ public class ApiButton extends AbstractButton<ApiButton> {
     public ApiButton() {
     }
 
-    public ApiButton(String name, ButtonType type, String url, RequestType requestType, String args) {
-        super(name, type);
+    public ApiButton(String name, UUID uuid, ButtonType type, String url, RequestType requestType, String args) {
+        super(name, uuid, type);
         this.url = url;
         this.requestType = requestType;
         this.args = args;
@@ -46,6 +48,7 @@ public class ApiButton extends AbstractButton<ApiButton> {
         return new JSONObject()
                 .put("typeId", this.getClass().getName())
                 .put("name", this.getName())
+                .put("uuid", this.getUuid())
                 .put("type", this.getType().name())
                 .put("url", this.url)
                 .put("requestType", this.requestType.name())
@@ -56,6 +59,7 @@ public class ApiButton extends AbstractButton<ApiButton> {
     public ApiButton fromJson(JSONObject json) throws JSONException {
         return new ApiButton(
                 json.getString("name"),
+                UUID.fromString(json.getString("uuid")),
                 ButtonType.valueOf(json.getString("type")),
                 json.getString("url"),
                 RequestType.valueOf(json.getString("requestType")),
@@ -65,6 +69,7 @@ public class ApiButton extends AbstractButton<ApiButton> {
 
     @Override
     public void bindAction(Button button) {
+        super.bindAction(button);
         button.setOnClickListener(v -> {
             final StringRequest stringRequest = new StringRequest(getRequestType().getMethod(), url,
                     response -> {

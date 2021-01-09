@@ -3,7 +3,10 @@
     <string name="add_button_button">Ajouter un bouton</string>
     <string name="add_button_title">Ajouter un bouton</string>
     <string name="create_button_submit">Créer</string>
+    <string name="update_button_submit">Mettre à jour</string>
 
     <string name="button_name_hint">Nom du bouton</string>
     <string name="url_hint">URL</string>
+    <string name="title_activity_edit_button_controller">Modifier le bouton</string>
+    <string name="delete_button_submit">Supprimer</string>
 </resources>

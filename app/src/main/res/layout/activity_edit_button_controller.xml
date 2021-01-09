@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_add_controller"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/design_default_color_background"
+    android:orientation="vertical"
+    android:weightSum="100">
+
+
+    <Button
+        android:id="@+id/update_controller_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:onClick="submit"
+        android:text="@string/update_button_submit" />
+
+    <Button
+        android:id="@+id/delete_controller_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:onClick="delete"
+        android:background="@color/danger"
+        android:text="@string/delete_button_submit" />
+
+</LinearLayout>

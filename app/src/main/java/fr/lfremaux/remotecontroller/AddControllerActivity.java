@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import fr.lfremaux.remotecontroller.buttons.ButtonType;
@@ -101,7 +102,6 @@ public class AddControllerActivity extends AppCompatActivity {
     }
 
     public void submit(View view) {
-
         final ButtonType type = getCurrentButtonType();
 
         switch (type) {
@@ -109,6 +109,7 @@ public class AddControllerActivity extends AppCompatActivity {
                 RemoteController.getInstance().getButtons().add(
                         new ApiButton(
                                 getCurrentButtonName(),
+                                UUID.randomUUID(),
                                 getCurrentButtonType(),
                                 getCurrentButtonUrl(),
                                 getCurrentRequestType(),
