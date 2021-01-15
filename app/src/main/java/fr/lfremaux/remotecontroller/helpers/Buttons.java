@@ -33,13 +33,13 @@ public class Buttons {
 
     public static void saveButtons(Context context, List<AbstractButton<?>> buttons) {
         final JSONArray array = new JSONArray();
-        buttons.forEach(button -> {
+        for (AbstractButton<?> button : buttons) {
             try {
                 array.put(button.toJson());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        });
+        }
 
         Files.writeData(
                 context.getFilesDir().getAbsolutePath(),

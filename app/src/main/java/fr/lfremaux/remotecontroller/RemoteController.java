@@ -45,12 +45,12 @@ public class RemoteController extends AppCompatActivity {
 
     public void addInitialButtons() {
         final LinearLayout vg = findViewById(R.id.buttons_container);
-        buttons.forEach(button -> {
+        for (AbstractButton<?> button : buttons) {
             final Button b = new Button(this);
             b.setText(button.getName());
             button.bindAction(b);
             vg.addView(b);
-        });
+        }
     }
 
     public void refreshButtons() {

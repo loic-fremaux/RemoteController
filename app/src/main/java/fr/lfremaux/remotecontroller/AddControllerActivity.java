@@ -10,6 +10,7 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -72,10 +73,15 @@ public class AddControllerActivity extends AppCompatActivity {
             removeList.add(i - 1);
         }
 
-        removeList = removeList.stream()
-                .sorted(Collections.reverseOrder())
-                .collect(Collectors.toList());
-        removeList.forEach(vg::removeViewAt);
+        List<Integer> list = new ArrayList<>();
+        for (Integer integer : removeList) {
+            list.add(integer);
+        }
+        Collections.sort(list, Collections.reverseOrder());
+        removeList = list;
+        for (Integer integer : removeList) {
+            vg.removeViewAt(integer);
+        }
 
         switch (getCurrentButtonType()) {
             case API_CALL: {
