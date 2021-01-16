@@ -13,4 +13,6 @@
     <string name="request_type_title">Type de requête</string>
     <string name="url_title">URL à appeler</string>
     <string name="request_method_title">Méthode</string>
+
+    <string name="copy">copier</string>
 </resources>

@@ -1,5 +1,8 @@
 package fr.lfremaux.remotecontroller.buttons.impl;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.widget.Button;
 
 import com.android.volley.toolbox.StringRequest;
@@ -8,8 +11,11 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.UUID;
 
+import fr.lfremaux.remotecontroller.R;
 import fr.lfremaux.remotecontroller.RemoteController;
 import fr.lfremaux.remotecontroller.buttons.AbstractButton;
 import fr.lfremaux.remotecontroller.buttons.ButtonType;
@@ -74,19 +80,40 @@ public class ApiButton extends AbstractButton<ApiButton> {
             final StringRequest stringRequest = new StringRequest(getRequestType().getMethod(), url,
                     response -> {
                         System.out.println("resp: " + response);
-                        Snackbar.make(
+                        final Snackbar snackbar = Snackbar.make(
                                 button,
                                 response,
                                 Snackbar.LENGTH_SHORT
-                        ).show();
+                        );
+
+                        snackbar.setAction(R.string.copy, v1 -> {
+                            System.out.println("clicked");
+                        });
                     },
                     error -> {
                         System.out.println("request failed " + error.getMessage());
-                        Snackbar.make(
+
+                        StringWriter sw = new StringWriter();
+                        PrintWriter pw = new PrintWriter(sw);
+                        error.printStackTrace(pw);
+                        String sStackTrace = sw.toString();
+
+                        final Snackbar snackbar = Snackbar.make(
                                 button,
-                                "Une erreur est survenue...\n" + error.getMessage(),
-                                Snackbar.LENGTH_SHORT
-                        ).show();
+                                "Une erreur est survenue...\n" + sStackTrace,
+                                Snackbar.LENGTH_LONG
+                        );
+
+                        snackbar.setAction(R.string.copy, v1 -> {
+                            System.out.println("clicked");
+
+                            ClipboardManager clipboard = (ClipboardManager) RemoteController.getInstance().getSystemService(Context.CLIPBOARD_SERVICE);
+                            ClipData clip = ClipData.newPlainText("error", sStackTrace);
+                            clipboard.setPrimaryClip(clip);
+                        });
+
+                        snackbar.show();
+
                     });
 
             RemoteController.getInstance().getRequestQueue().add(stringRequest);
