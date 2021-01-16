@@ -79,7 +79,6 @@ public class ApiButton extends AbstractButton<ApiButton> {
         button.setOnClickListener(v -> {
             final StringRequest stringRequest = new StringRequest(getRequestType().getMethod(), url,
                     response -> {
-                        System.out.println("resp: " + response);
                         final Snackbar snackbar = Snackbar.make(
                                 button,
                                 response,
@@ -87,8 +86,12 @@ public class ApiButton extends AbstractButton<ApiButton> {
                         );
 
                         snackbar.setAction(R.string.copy, v1 -> {
-                            System.out.println("clicked");
+                            ClipboardManager clipboard = (ClipboardManager) RemoteController.getInstance().getSystemService(Context.CLIPBOARD_SERVICE);
+                            ClipData clip = ClipData.newPlainText("success", response);
+                            clipboard.setPrimaryClip(clip);
                         });
+
+                        snackbar.show();
                     },
                     error -> {
                         System.out.println("request failed " + error.getMessage());
@@ -105,8 +108,6 @@ public class ApiButton extends AbstractButton<ApiButton> {
                         );
 
                         snackbar.setAction(R.string.copy, v1 -> {
-                            System.out.println("clicked");
-
                             ClipboardManager clipboard = (ClipboardManager) RemoteController.getInstance().getSystemService(Context.CLIPBOARD_SERVICE);
                             ClipData clip = ClipData.newPlainText("error", sStackTrace);
                             clipboard.setPrimaryClip(clip);
@@ -117,8 +118,6 @@ public class ApiButton extends AbstractButton<ApiButton> {
                     });
 
             RemoteController.getInstance().getRequestQueue().add(stringRequest);
-
-            System.out.println("button clicked: " + url);
         });
     }
 }
