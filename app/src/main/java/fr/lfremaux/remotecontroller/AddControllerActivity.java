@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,6 +34,14 @@ public class AddControllerActivity extends AppCompatActivity {
     }
 
     private void createTypeSelector() {
+        final LinearLayout vg = findViewById(R.id.activity_add_controller);
+
+        final TextView spinnerTitle = new TextView(this);
+        spinnerTitle.setPadding(50, 50, 0, 5);
+        spinnerTitle.setText(R.string.request_type_title);
+        spinnerTitle.setId(R.id.request_type_spinner_title);
+        vg.addView(spinnerTitle, 1);
+
         final Spinner typeSpinner = new Spinner(this);
         final ArrayAdapter<CharSequence> elements = ArrayAdapter.createFromResource(this,
                 R.array.type_spinner_values, android.R.layout.simple_spinner_item);
@@ -40,6 +49,7 @@ public class AddControllerActivity extends AppCompatActivity {
         typeSpinner.setAdapter(elements);
 
         typeSpinner.setId(R.id.request_type_spinner);
+        typeSpinner.setPadding(50, 0, 50, 0);
         typeSpinner.setEnabled(true);
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -54,8 +64,7 @@ public class AddControllerActivity extends AppCompatActivity {
             }
         });
 
-        final LinearLayout vg = findViewById(R.id.activity_add_controller);
-        vg.addView(typeSpinner, 1);
+        vg.addView(typeSpinner, 2);
     }
 
     private void refreshType() {
@@ -66,6 +75,7 @@ public class AddControllerActivity extends AppCompatActivity {
         while ((view = vg.getChildAt(i)) != null) {
             i++;
             if (view.getId() == R.id.request_type_spinner) continue;
+            if (view.getId() == R.id.request_type_spinner_title) continue;
             if (view.getId() == R.id.create_controller_submit) continue;
             if (view.getId() == R.id.button_name_input) continue;
 
@@ -79,10 +89,23 @@ public class AddControllerActivity extends AppCompatActivity {
 
         switch (getCurrentButtonType()) {
             case API_CALL: {
+                final TextView textTitle = new TextView(this);
+                textTitle.setPadding(50, 20, 0, 5);
+                textTitle.setText(R.string.url_title);
+                vg.addView(textTitle, vg.getChildCount() - 1);
+
                 final EditText text = new EditText(this);
                 text.setId(R.id.url_input);
+
+//              text.setWidth((int) (getWindowManager().getDefaultDisplay().getWidth() * 0.8));
+                text.setPadding(50, 0, 50, 20);
                 text.setHint(R.string.url_hint);
                 vg.addView(text, vg.getChildCount() - 1);
+
+                final TextView spinnerTitle = new TextView(this);
+                spinnerTitle.setPadding(50, 20, 0, 5);
+                spinnerTitle.setText(R.string.request_method_title);
+                vg.addView(spinnerTitle, vg.getChildCount() - 1);
 
                 final Spinner typeSpinner = new Spinner(this);
                 final ArrayAdapter<CharSequence> elements = ArrayAdapter.createFromResource(this,
@@ -91,6 +114,7 @@ public class AddControllerActivity extends AppCompatActivity {
                 typeSpinner.setAdapter(elements);
 
                 typeSpinner.setId(R.id.api_request_type_spinner);
+                typeSpinner.setPadding(50, 0, 50, 0);
                 typeSpinner.setEnabled(true);
                 vg.addView(typeSpinner, vg.getChildCount() - 1);
                 break;

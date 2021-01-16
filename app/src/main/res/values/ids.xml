@@ -2,4 +2,5 @@
 <resources>
     <item type="id" name="url_input"/>
     <item type="id" name="api_request_type_spinner"/>
+    <item type="id" name="request_type_spinner_title"/>
 </resources>
